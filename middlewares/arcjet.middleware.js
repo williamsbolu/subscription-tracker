@@ -1,6 +1,12 @@
 import aj from "../config/arcjet.js";
 
 const arcjetMiddleware = async (req, res, next) => {
+  console.log("Client IP:", req.ip);
+  console.log("X-Forwarded-For:", req.get("X-Forwarded-For"));
+
+  console.log("Request IP:", req.ip);
+  console.log("User-Agent:", req.headers["user-agent"]);
+  console.log("Accept-Language:", req.headers["accept-language"]);
   try {
     const decision = await aj.protect(req, { requested: 1 });
 
