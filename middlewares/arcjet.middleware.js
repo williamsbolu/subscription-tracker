@@ -1,7 +1,14 @@
 import aj from "../config/arcjet.js";
 
 const arcjetMiddleware = async (req, res, next) => {
-  // Skip Arcjet for health checks (no X-Forwarded-For or localhost IP)
+  console.log("Client IP:", req.ip);
+  console.log("X-Forwarded-For:", req.get("X-Forwarded-For"));
+  console.log("Request IP:", req.ip);
+  console.log("User-Agent:", req.headers["user-agent"]);
+  console.log("Accept-Language:", req.headers["accept-language"]);
+
+  // ? NOT IMPORTANT, CODE STILL WORKS PERFECTLY: JUST PREVENT ARCJET FROM RUNNING ON INITIAL BUILD AND DURING HEALTH CHECKS ON RENDER PLATFORM.
+  // Skip Arcjet for health checks by render on initial build (no X-Forwarded-For or localhost IP)
   if (
     !req.get("X-Forwarded-For") ||
     req.ip === "::1" ||
@@ -10,12 +17,6 @@ const arcjetMiddleware = async (req, res, next) => {
     console.log("Skipping Arcjet for health check request");
     return next();
   }
-
-  // console.log("Client IP:", req.ip);
-  // console.log("X-Forwarded-For:", req.get("X-Forwarded-For"));
-  // console.log("Request IP:", req.ip);
-  // console.log("User-Agent:", req.headers["user-agent"]);
-  // console.log("Accept-Language:", req.headers["accept-language"]);
 
   try {
     const decision = await aj.protect(req, { requested: 1 });
