@@ -25,7 +25,8 @@ app.use("/api/v1/workflows", workflowRouter);
 
 app.use(errorMiddleware);
 
-app.listen(PORT, async () => {
+const port = PORT || 3000;
+app.listen(port, async () => {
   console.log(
     `Subscription Tracker Api is running on http://localhost:${PORT}`
   );
