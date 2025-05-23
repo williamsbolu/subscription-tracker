@@ -9,6 +9,7 @@ const arcjetMiddleware = async (req, res, next) => {
   console.log("Accept-Language:", req.headers["accept-language"]);
   try {
     const decision = await aj.protect(req, { requested: 1 });
+    console.log("Arcjet Decision:", JSON.stringify(decision, null, 2));
 
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit())
