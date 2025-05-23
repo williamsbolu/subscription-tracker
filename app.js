@@ -15,8 +15,8 @@ const app = express();
 
 app.set("trust proxy", true);
 
-// For render health checks: "it's optional"
-app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
+// For render health checks: "it's optional" but didnt work for what i intended.
+// app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

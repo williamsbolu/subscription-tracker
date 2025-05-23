@@ -1,6 +1,16 @@
 import aj from "../config/arcjet.js";
 
 const arcjetMiddleware = async (req, res, next) => {
+  // Skip Arcjet for health checks (no X-Forwarded-For or localhost IP)
+  if (
+    !req.get("X-Forwarded-For") ||
+    req.ip === "::1" ||
+    req.ip === "127.0.0.1"
+  ) {
+    console.log("Skipping Arcjet for health check request");
+    return next();
+  }
+
   // console.log("Client IP:", req.ip);
   // console.log("X-Forwarded-For:", req.get("X-Forwarded-For"));
   // console.log("Request IP:", req.ip);
