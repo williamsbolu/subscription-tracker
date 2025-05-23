@@ -1,15 +1,15 @@
 import aj from "../config/arcjet.js";
 
 const arcjetMiddleware = async (req, res, next) => {
-  console.log("Client IP:", req.ip);
-  console.log("X-Forwarded-For:", req.get("X-Forwarded-For"));
+  // console.log("Client IP:", req.ip);
+  // console.log("X-Forwarded-For:", req.get("X-Forwarded-For"));
+  // console.log("Request IP:", req.ip);
+  // console.log("User-Agent:", req.headers["user-agent"]);
+  // console.log("Accept-Language:", req.headers["accept-language"]);
 
-  console.log("Request IP:", req.ip);
-  console.log("User-Agent:", req.headers["user-agent"]);
-  console.log("Accept-Language:", req.headers["accept-language"]);
   try {
     const decision = await aj.protect(req, { requested: 1 });
-    console.log("Arcjet Decision:", JSON.stringify(decision, null, 2));
+    // console.log("Arcjet Decision:", JSON.stringify(decision, null, 2));
 
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit())
@@ -31,3 +31,5 @@ const arcjetMiddleware = async (req, res, next) => {
 };
 
 export default arcjetMiddleware;
+
+// ? EVERYTHING WORKS FINE 😊
